@@ -231,23 +231,23 @@ public class MainActivity extends AppCompatActivity {
         String handOutput = "";
         String footOutput = "";
 
-//        // Compute height difference
-//        float handHeightDifference = Math.abs(leftWristY - rightWristY);
-//        Log.d("POSE_DEBUG", "Left Wrist Y: " + leftWristY + ", Right Wrist Y: " + rightWristY);
-//
-//        if (handHeightDifference >= 0.10) {
-//            // Determine which hand is higher
-//            if (leftWristY < rightWristY) {
-//                handOutput = "left"; // Left hand is higher → Turn Left
-//            } else {
-//                handOutput = "right"; // Right hand is higher → Turn Right
-//            }
-//        } else {
-//            handOutput = "straight"; // Hands are close → Go Straight
-//        }
-//
-//        // Log the final gesture output
-//        Log.d("POSE_OUTPUT_HAND", "Hand Gesture: " + (handOutput.isEmpty() ? "None" : handOutput));
+        // Compute height difference
+        float handHeightDifference = Math.abs(leftWristY - rightWristY);
+        Log.d("POSE_DEBUG", "Left Wrist Y: " + leftWristY + ", Right Wrist Y: " + rightWristY);
+
+        if (handHeightDifference >= 0.10) {
+            // Determine which hand is higher
+            if (leftWristY < rightWristY) {
+                handOutput = "left"; // Left hand is higher → Turn Left
+            } else {
+                handOutput = "right"; // Right hand is higher → Turn Right
+            }
+        } else {
+            handOutput = "straight"; // Hands are close → Go Straight
+        }
+
+        // Log the final gesture output
+        Log.d("POSE_OUTPUT_HAND", "Hand Gesture: " + (handOutput.isEmpty() ? "None" : handOutput));
 
 
         // Check for foot movement
@@ -256,8 +256,9 @@ public class MainActivity extends AppCompatActivity {
         if (footHeightDifference <= 0.02) {
             footOutput = "move";
         } else {
-            footOutput = "stop";
+            footOutput = "";
         }
+        Log.d( "CONTROL_OUTPUT", handOutput+  " " + footOutput);
 
         // Log both outputs separately
         Log.d("POSE_OUTPUT_FOOT", "Foot Gesture: " + (footOutput.isEmpty() ? "None" : footOutput));
