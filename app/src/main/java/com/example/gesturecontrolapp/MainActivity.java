@@ -145,11 +145,11 @@ public class MainActivity extends AppCompatActivity {
                             .setMinTrackingConfidence(0.5f)
                             .setResultListener((result, timestamp) -> {
                                 if (result == null || result.landmarks() == null || result.landmarks().isEmpty()) {
-                                    Log.e("POSE", "No landmarks detected.");
+//                                    Log.e("POSE", "No landmarks detected.");
                                     return;
                                 }
 
-                                Log.d("POSE_OUTPUT", "Landmarks detected: " + result.landmarks().size());
+//                                Log.d("POSE_OUTPUT", "Landmarks detected: " + result.landmarks().size());
 
                                 for (List<NormalizedLandmark> personLandmarks : result.landmarks()) {
                                     detectGestures(personLandmarks);
@@ -235,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
         float handHeightDifference = Math.abs(leftWristY - rightWristY);
         Log.d("POSE_DEBUG", "Left Wrist Y: " + leftWristY + ", Right Wrist Y: " + rightWristY);
 
-        if (handHeightDifference >= 0.10) {
+        if (handHeightDifference >= 0.05) {
             // Determine which hand is higher
             if (leftWristY < rightWristY) {
                 handOutput = "left"; // Left hand is higher → Turn Left
@@ -253,12 +253,12 @@ public class MainActivity extends AppCompatActivity {
         // Check for foot movement
         float footHeightDifference = Math.abs(rightToeY - rightHeelY);
 
-        if (footHeightDifference <= 0.02) {
+        if (footHeightDifference <= 0.01) {
             footOutput = "move";
         } else {
             footOutput = "";
         }
-        Log.d( "CONTROL_OUTPUT", handOutput+  " " + footOutput);
+        Log.d( "CONTROL_OUTPUT", handOutput+  ", " + footOutput);
 
         // Log both outputs separately
         Log.d("POSE_OUTPUT_FOOT", "Foot Gesture: " + (footOutput.isEmpty() ? "None" : footOutput));
