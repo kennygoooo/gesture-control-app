@@ -145,11 +145,11 @@ public class MainActivity extends AppCompatActivity {
                             .setMinTrackingConfidence(0.5f)
                             .setResultListener((result, timestamp) -> {
                                 if (result == null || result.landmarks() == null || result.landmarks().isEmpty()) {
-                                    Log.e("POSE", "No landmarks detected.");
+//                                    Log.e("POSE", "No landmarks detected.");
                                     return;
                                 }
 
-                                Log.d("POSE_OUTPUT", "Landmarks detected: " + result.landmarks().size());
+//                                Log.d("POSE_OUTPUT", "Landmarks detected: " + result.landmarks().size());
 
                                 for (List<NormalizedLandmark> personLandmarks : result.landmarks()) {
                                     detectGestures(personLandmarks);
@@ -231,23 +231,36 @@ public class MainActivity extends AppCompatActivity {
         String handOutput = "";
         String footOutput = "";
 
-        // Check for hand raise (only take the highest one)
-        if (rightWristY < headY - threshold && leftWristY < headY - threshold) {
-            // If both hands are raised, choose the **higher** one
-            handOutput = (rightWristY < leftWristY) ? "right" : "left";
-        } else if (rightWristY < headY - threshold) {
-            handOutput = "right";
-        } else if (leftWristY < headY - threshold) {
-            handOutput = "left";
+        // Compute height difference
+        float handHeightDifference = Math.abs(leftWristY - rightWristY);
+        Log.d("POSE_DEBUG", "Left Wrist Y: " + leftWristY + ", Right Wrist Y: " + rightWristY);
+
+        if (handHeightDifference >= 0.05) {
+            // Determine which hand is higher
+            if (leftWristY < rightWristY) {
+                handOutput = "left"; // Left hand is higher → Turn Left
+            } else {
+                handOutput = "right"; // Right hand is higher → Turn Right
+            }
+        } else {
+            handOutput = "straight"; // Hands are close → Go Straight
         }
+
+        // Log the final gesture output
+        Log.d("POSE_OUTPUT_HAND", "Hand Gesture: " + (handOutput.isEmpty() ? "None" : handOutput));
+
 
         // Check for foot movement
-        if (rightToeY > rightHeelY) {
+        float footHeightDifference = Math.abs(rightToeY - rightHeelY);
+
+        if (footHeightDifference <= 0.01) {
             footOutput = "move";
+        } else {
+            footOutput = "";
         }
+        Log.d( "CONTROL_OUTPUT", handOutput+  ", " + footOutput);
 
         // Log both outputs separately
-        Log.d("POSE_OUTPUT_HAND", "Hand Gesture: " + (handOutput.isEmpty() ? "None" : handOutput));
         Log.d("POSE_OUTPUT_FOOT", "Foot Gesture: " + (footOutput.isEmpty() ? "None" : footOutput));
 
         if (poseOverlay == null) {
