@@ -1,21 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
 
-
-
-    <!-- Camera Preview -->
-    <androidx.camera.view.PreviewView
-        android:id="@+id/viewFinder"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-    <com.example.gesturecontrolapp.PoseOverlayView
-        android:id="@+id/poseOverlay"
+    <!-- 📡 Full-screen stream from ESP32 -->
+    <WebView
+        android:id="@+id/streamView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"/>
 
-</RelativeLayout>
+        android:background="#000000"/>
+
+
+    <!-- 📦 Mini camera + overlay box -->
+    <FrameLayout
+        android:layout_width="150dp"
+        android:layout_height="200dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp">
+
+        <TextView
+            android:id="@+id/gestureStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gesture Mode OFF"
+            android:textColor="#FFFFFF"
+            android:background="#AAFF5252"
+            android:textSize="16sp"
+            android:padding="8dp"
+            android:rotation="-90"
+            android:elevation="10dp"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="-30dp"
+            android:translationY="80dp"
+            />
+
+        <!-- 🤳 Phone camera preview -->
+        <androidx.camera.view.PreviewView
+            android:id="@+id/viewFinder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible" />
+
+        <!-- 🧍 Pose landmarks drawn over preview -->
+        <com.example.gesturecontrolapp.PoseOverlayView
+            android:id="@+id/poseOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible" />
+
+    </FrameLayout>
+
+</FrameLayout>
