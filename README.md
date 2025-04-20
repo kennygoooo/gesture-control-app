@@ -41,7 +41,7 @@ This app is designed to work with the [AirControl Car ESP32](https://github.com/
 
 3. The front camera will activate and begin detecting gestures.
 
-4. Recognized gestures will send corresponding commands (e.g., `move1`, `left2`, `0`) over UDP to the ESP32.
+4. Recognized gestures will send corresponding commands (e.g., `left`, `right`, `spead_up`, `stop`) over UDP to the ESP32.
 
 ---
 
