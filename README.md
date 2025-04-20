@@ -51,3 +51,16 @@ To use this app, the robotic vehicle must be running the companion project:
 [AirControl Car ESP32](https://github.com/kennygoooo/gesture-control-ESP32-robotic-vehicle)
 
 ---
+
+### Demo Video
+
+Watch the project in action:  
+[YouTube Demo](https://youtube.com/shorts/OtwPKSwx-Y8)
+
+---
+
+### System Architecture
+![System Diagram](https://drive.google.com/uc?export=view&id=117BBJ2OMhRqG3LdELHGqwN1iL7YeLGva)
+
+---
+
